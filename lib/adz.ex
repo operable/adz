@@ -1,5 +1,8 @@
 defmodule Adz do
 
+  @timestamp_format "~.4.0w-~.2.0w-~.2.0wT~.2.0w:~.2.0w:~.2.0w"
+  @timestamp_micros_format "~.4.0w-~.2.0w-~.2.0wT~.2.0w:~.2.0w:~.2.0w.~.4.0w"
+
   defmacro __using__(_) do
     quote do
       require Logger
@@ -15,14 +18,14 @@ defmodule Adz do
   end
 
   def text(level, msg, {date, time}, metadata) do
-    "#{format_date(date)} #{format_time(time)}"
+    format_timestamp(date, time) <> " "
     <> format_metadata(metadata)
     <> "[#{level}] #{format_message(msg)}"
     <> format_extra(Keyword.get(metadata, :extra)) <> "\n"
   end
 
   def json(level, msg, {date, time}, metadata) do
-    entry = add_metadata(%{timestamp: "#{format_date(date)} #{format_time(time)}",
+    entry = add_metadata(%{timestamp: format_timestamp(date, time),
                            level: "#{level}",
                            message: format_message(msg)}, metadata)
     Poison.encode!(entry) <> "\n"
@@ -88,36 +91,18 @@ defmodule Adz do
     end
   end
 
-
+  defp format_timestamp({year, month, day}, {hour, min, sec}) do
+    :io_lib.format(@timestamp_format, [year, month, day, hour, min, sec])
+    |> IO.iodata_to_binary
+  end
+  defp format_timestamp({year, month, day}, {hour, min, sec, micro}) do
+    :io_lib.format(@timestamp_micros_format, [year, month, day, hour, min, sec, micro])
+    |> IO.iodata_to_binary
+  end
 
   defp format_module(nil), do: nil
   defp format_module(module) do
     inspect(module)
   end
-
-  defp format_date({year, month, day}) do
-    month = format_number(month)
-    day = format_number(day)
-    "#{month}-#{day}-#{year}"
-  end
-
-  defp format_time({hour, min, sec}) do
-    hour = format_number(hour)
-    min = format_number(min)
-    sec = format_number(sec)
-    "#{hour}:#{min}:#{sec}"
-  end
-  defp format_time({hour, min, sec, micro}) do
-    hour = format_number(hour)
-    min = format_number(min)
-    sec = format_number(sec)
-    micro = format_number(micro)
-    "#{hour}:#{min}:#{sec}:#{micro}"
-  end
-
-  defp format_number(n) when n < 10 do
-    "0#{n}"
-  end
-  defp format_number(n), do: "#{n}"
 
 end
