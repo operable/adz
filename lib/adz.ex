@@ -92,7 +92,7 @@ defmodule Adz do
 
   defp format_module(nil), do: nil
   defp format_module(module) do
-    String.replace("#{module}", ~r/^Elixir\./, "")
+    inspect(module)
   end
 
   defp format_date({year, month, day}) do
