@@ -15,6 +15,6 @@ defmodule Adz.Mixfile do
   end
 
   defp deps do
-    [{:poison, "~> 1.5.0"}]
+    [{:poison, "~> 1.5.2"}]
   end
 end
