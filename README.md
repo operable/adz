@@ -1,4 +1,4 @@
-Adz /_&#1237;dz_/
+# Adz /_&#1237;dz_/
 
 1. Noun: A woodworking tool used for smoothing or carving timbers.
 1. Noun: A formatting library for Elixir's Logger.
