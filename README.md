@@ -1,5 +1,7 @@
 # Adz /_&#1237;dz_/
 
+*NOTE*: Adz is no longer being developed. You should probably just use Elixir's [Logger](https://hexdocs.pm/logger/Logger.html) directly.
+
 1. Noun: A woodworking tool used for smoothing or carving timbers.
 1. Noun: A formatting library for Elixir's Logger.
 
@@ -44,7 +46,3 @@ Example output:
 ```
 2016-02-22T13:36:32.0838  (Cog.Command.RuleCache:33) [info] Ready. Command rule cache TTL is 10 seconds.
 ```
-
-## Filing Issues
-
-Adz issues are tracked centrally in [Cog's](https://github.com/operable/cog/issues) issue tracker.
